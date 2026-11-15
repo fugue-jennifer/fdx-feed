@@ -22,7 +22,7 @@ jobs:
           export TZ=Asia/Taipei
           V="$(date +%Y).$((10#$(date +%m%d))).$((10#$(date +%H%M%S)))"
           npm version "$V" --no-git-tag-version
-      - run: npm publish --access public --provenance=false
+      - run: npm publish --access public --provenance
       - run: |
           sleep 5
           curl -s "https://purge.jsdelivr.net/npm/@fuguemusic/fdx@latest/d.js" || true
