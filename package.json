@@ -2,7 +2,17 @@
   "name": "@fuguemusic/fdx",
   "version": "2026.1115.1",
   "description": "data feed",
-  "files": ["d.js"],
+  "files": [
+    "d.js"
+  ],
   "license": "UNLICENSED",
-  "repository": { "type": "git", "url": "https://github.com/fugue-jennifer/fdx-feed" }
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fugue-jennifer/fdx-feed.git"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true,
+    "registry": "https://registry.npmjs.org/"
+  }
 }
