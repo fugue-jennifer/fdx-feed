@@ -1,0 +1,8 @@
+{
+  "name": "@fuguemusic/fdx",
+  "version": "2026.1115.1",
+  "description": "data feed",
+  "files": ["d.js"],
+  "license": "UNLICENSED",
+  "repository": { "type": "git", "url": "https://github.com/fugue-jennifer/fdx-feed" }
+}
