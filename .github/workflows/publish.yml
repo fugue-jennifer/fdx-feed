@@ -1,0 +1,29 @@
+name: publish
+on:
+  push:
+    branches: [main]
+    paths: ['d.js']
+  workflow_dispatch:
+permissions:
+  id-token: write
+  contents: read
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          registry-url: 'https://registry.npmjs.org'
+      - run: npm install -g npm@latest
+      - name: version
+        run: |
+          export TZ=Asia/Taipei
+          V="$(date +%Y).$((10#$(date +%m%d))).$((10#$(date +%H%M%S)))"
+          npm version "$V" --no-git-tag-version
+      - run: npm publish --access public --provenance=false
+      - run: |
+          sleep 5
+          curl -s "https://purge.jsdelivr.net/npm/@fuguemusic/fdx@latest/d.js" || true
+          curl -s "https://purge.jsdelivr.net/npm/@fuguemusic/fdx/d.js" || true
