@@ -15,15 +15,18 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
-          registry-url: 'https://registry.npmjs.org'
-      - run: npm install -g npm@latest
+      - run: npm install -g npm@latest && npm --version
       - name: version
         run: |
           export TZ=Asia/Taipei
           V="$(date +%Y).$((10#$(date +%m%d))).$((10#$(date +%H%M%S)))"
           npm version "$V" --no-git-tag-version
-      - run: npm publish --access public --provenance
+      - name: publish (OIDC trusted publishing)
+        run: |
+          unset NODE_AUTH_TOKEN NPM_TOKEN
+          rm -f ~/.npmrc .npmrc
+          npm publish --access public --provenance --registry https://registry.npmjs.org/ --loglevel verbose 2>&1 | grep -viE "authToken" | tail -40
+          test ${PIPESTATUS[0]} -eq 0
       - run: |
           sleep 5
           curl -s "https://purge.jsdelivr.net/npm/@fuguemusic/fdx@latest/d.js" || true
-          curl -s "https://purge.jsdelivr.net/npm/@fuguemusic/fdx/d.js" || true
